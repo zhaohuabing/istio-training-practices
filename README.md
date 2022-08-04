@@ -1,0 +1,1 @@
+Istio training practices

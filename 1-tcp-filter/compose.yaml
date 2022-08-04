@@ -1,0 +1,18 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  instance1:
+    ports:
+      - "7777:5678"
+    image: hashicorp/http-echo 
+    command: -text="instance 1"
+  instance2:
+    ports:
+      - "8888:5678"
+    image: hashicorp/http-echo 
+    command: -text="instance 2"
+  envoy:
+    image: envoyproxy/envoy:v1.22.4
+    command: "-c /etc/envoy/envoy.yaml -l debug"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+    network_mode: host
