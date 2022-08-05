@@ -1,0 +1,40 @@
+version: "3"  # optional since v1.27.0
+services:
+  instance1:
+    image: hashicorp/http-echo 
+    command: -text="instance 1"
+    ports:
+      - "6666:5678"
+  instance2:
+    image: hashicorp/http-echo 
+    command: -text="instance 2"
+    ports:
+      - "7777:5678"
+  instance3:
+    image: hashicorp/http-echo 
+    command: -text="instance 3"
+    ports:
+      - "8888:5678"
+  instance4:
+    image: hashicorp/http-echo 
+    command: -text="instance 4"
+    ports:
+      - "9999:5678"
+  xds-server:
+    image: zhaohuabing/envoy-control-plane-demo
+    ports:
+      - "18000:18000"
+  envoy:
+    image: envoyproxy/envoy:v1.22.4
+    command: "-c /etc/envoy/envoy.yaml -l info"
+    ports:
+      - "8080:8080"
+      - "15000:15000"
+    volumes:
+      - ./envoy.yaml:/etc/envoy/envoy.yaml
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
