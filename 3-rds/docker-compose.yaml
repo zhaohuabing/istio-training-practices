@@ -27,3 +27,4 @@ services:
       - "8080:8080"
     volumes:
       - ./envoy.yaml:/etc/envoy/envoy.yaml
+    # - ./envoy-http-route.yaml:/etc/envoy/envoy.yaml
