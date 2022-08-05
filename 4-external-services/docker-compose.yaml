@@ -20,10 +20,6 @@ services:
     command: -text="instance 4"
     ports:
       - "9999:5678"
-  xds-server:
-    image: zhaohuabing/envoy-control-plane-demo
-    ports:
-      - "18000:18000"
   envoy:
     image: envoyproxy/envoy:v1.22.4
     command: "-c /etc/envoy/envoy.yaml -l info"
@@ -38,3 +34,11 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
+  jaeger:
+    image: jaegertracing/all-in-one:1.22 
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+    ports:
+      - "14268:14268"
+      - "16686:16686"
+      - "9411:9411"
