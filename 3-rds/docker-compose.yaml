@@ -20,11 +20,15 @@ services:
     command: -text="instance 4"
     ports:
       - "9999:5678"
+  xds-server:
+    image: zhaohuabing/envoy-control-plane-demo
+    ports:
+      - "18000:18000"
   envoy:
     image: envoyproxy/envoy:v1.22.4
     command: "-c /etc/envoy/envoy.yaml -l info"
     ports:
       - "8080:8080"
+      - "15000:15000"
     volumes:
       - ./envoy.yaml:/etc/envoy/envoy.yaml
-    # - ./envoy-http-route.yaml:/etc/envoy/envoy.yaml

@@ -12,7 +12,7 @@ static_resources:
           '@type': type.googleapis.com/envoy.extensions.filters.network.http_connection_manager.v3.HttpConnectionManager
           stat_prefix: echo-service  
           route_config:
-            name: 
+            name: echo-service
             virtual_hosts:
             - name: echo-service
               domains:
