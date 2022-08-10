@@ -1,3 +1,51 @@
+root@iptables-test:/# iptables-legacy -t nat -L -v
+Chain PREROUTING (policy ACCEPT 69352 packets, 2896K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+29802 1788K ISTIO_INBOUND  tcp  --  any    any     anywhere             anywhere
+
+Chain INPUT (policy ACCEPT 69354 packets, 2896K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+
+Chain OUTPUT (policy ACCEPT 2711 packets, 241K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+  104  6240 ISTIO_OUTPUT  tcp  --  any    any     anywhere             anywhere
+ 2607  235K RETURN     udp  --  any    any     anywhere             anywhere             udp dpt:domain owner UID match 1337
+    0     0 RETURN     udp  --  any    any     anywhere             anywhere             udp dpt:domain owner GID match 1337
+   24  1696 REDIRECT   udp  --  any    any     anywhere             kube-dns.kube-system.svc.cluster.local  udp dpt:domain redir ports 15053
+
+Chain POSTROUTING (policy ACCEPT 2735 packets, 243K bytes)
+ pkts bytes target     prot opt in     out     source               destination
+
+Chain ISTIO_INBOUND (1 references)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 RETURN     tcp  --  any    any     anywhere             anywhere             tcp dpt:15008
+    0     0 RETURN     tcp  --  any    any     anywhere             anywhere             tcp dpt:ssh
+    0     0 RETURN     tcp  --  any    any     anywhere             anywhere             tcp dpt:15090
+29799 1788K RETURN     tcp  --  any    any     anywhere             anywhere             tcp dpt:15021
+    1    60 RETURN     tcp  --  any    any     anywhere             anywhere             tcp dpt:15020
+    2   116 ISTIO_IN_REDIRECT  tcp  --  any    any     anywhere             anywhere
+
+Chain ISTIO_IN_REDIRECT (3 references)
+ pkts bytes target     prot opt in     out     source               destination
+    2   116 REDIRECT   tcp  --  any    any     anywhere             anywhere             redir ports 15006
+
+Chain ISTIO_OUTPUT (1 references)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 RETURN     all  --  any    lo      127.0.0.6            anywhere
+    0     0 ISTIO_IN_REDIRECT  tcp  --  any    lo      anywhere            !localhost            tcp dpt:!domain owner UID match 1337
+    0     0 RETURN     tcp  --  any    lo      anywhere             anywhere             tcp dpt:!domain ! owner UID match 1337
+  104  6240 RETURN     all  --  any    any     anywhere             anywhere             owner UID match 1337
+    0     0 ISTIO_IN_REDIRECT  all  --  any    lo      anywhere            !localhost            owner GID match 1337
+    0     0 RETURN     tcp  --  any    lo      anywhere             anywhere             tcp dpt:!domain ! owner GID match 1337
+    0     0 RETURN     all  --  any    any     anywhere             anywhere             owner GID match 1337
+    0     0 REDIRECT   tcp  --  any    any     anywhere             kube-dns.kube-system.svc.cluster.local  tcp dpt:domain redir ports 15053
+    0     0 RETURN     all  --  any    any     anywhere             localhost
+    0     0 ISTIO_REDIRECT  all  --  any    any     anywhere             anywhere
+
+Chain ISTIO_REDIRECT (1 references)
+ pkts bytes target     prot opt in     out     source               destination
+    0     0 REDIRECT   tcp  --  any    any     anywhere             anywhere             redir ports 15001
+
 root@iptables-test:/# iptables-legacy -t nat -S
 -P PREROUTING ACCEPT
 -P INPUT ACCEPT

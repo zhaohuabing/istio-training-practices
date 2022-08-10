@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
- name: iptables-test
+ name: network-tool
 spec:
  containers:
-   - name: iptables-test
-     image: zhaohuabing/iptables-test
+   - name: network-tool
+     image: zhaohuabing/network-tool
      securityContext:
        capabilities:
          add:
