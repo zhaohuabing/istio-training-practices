@@ -54,6 +54,6 @@ spec:
   - istio-egressgateway
   http:
   - match:
-    - route:
-      - destination:
-          host: www.baidu.com
+    route:
+    - destination:
+        host: www.baidu.com
