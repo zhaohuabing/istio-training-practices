@@ -6,13 +6,14 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 sudo apt install -y bash-completion
 source <(kubectl completion bash)
 echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo  "alias k=kubectl">> ~/.bashrc
+echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
+source ~/.bashrc
 sudo apt -y install snapd
 sudo snap install yq
 sudo snap install fx
 
 sudo apt install docker-compose
-alias k=kubectl
-echo  "alias k=kubectl">> ~/.bashrc
 export now="--force --grace-period 0"
 echo  'now="--force --grace-period 0"'>> ~/.bashrc
 

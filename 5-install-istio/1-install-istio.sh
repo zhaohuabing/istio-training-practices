@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BASE_DIR=$(dirname "$0")
-export ISTIO_VERSION=1.12.7
+export ISTIO_VERSION=1.14.4
 
 set -ex
 

@@ -16,7 +16,7 @@ spec:
   components:
     pilot:
       hub: istio
-      tag: 1.12.7
+      tag: 1.14.4
       k8s:
         resources:
           requests:
