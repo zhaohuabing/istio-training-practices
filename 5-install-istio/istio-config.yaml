@@ -10,6 +10,8 @@ spec:
   meshConfig:
     accessLogFile: /dev/stdout
     defaultConfig:
+      tracing:
+        sampling: 100.0
       holdApplicationUntilProxyStarts: true
       proxyMetadata:
         ISTIO_META_DNS_CAPTURE: "true"

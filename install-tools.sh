@@ -6,8 +6,9 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 sudo apt install -y bash-completion
 source <(kubectl completion bash)
 echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo  "alias g=git">> ~/.bashrc
 echo  "alias k=kubectl">> ~/.bashrc
-echo  "alias kgp=kubectl get pod">> ~/.bashrc
+echo  'alias kgp="kubectl get pod"'>> ~/.bashrc
 echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
 source ~/.bashrc
 sudo apt -y install snapd
