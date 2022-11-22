@@ -10,11 +10,25 @@ spec:
   meshConfig:
     accessLogFile: /dev/stdout
     defaultConfig:
-      tracing:
-        sampling: 100.0
       holdApplicationUntilProxyStarts: true
       proxyMetadata:
         ISTIO_META_DNS_CAPTURE: "true"
+      proxyStatsMatcher:
+        inclusionPrefixes:
+          - thrift
+          - dubbo
+          - kafka
+          - meta_protocol
+        inclusionRegexps:
+          - .*dubbo.*
+          - .*thrift.*
+          - .*kafka.*
+          - .*zookeeper.*
+          - .*meta_protocol.*
+      tracing:
+        sampling: 100
+        zipkin:
+          address: zipkin.istio-system:9411
   components:
     pilot:
       hub: istio
