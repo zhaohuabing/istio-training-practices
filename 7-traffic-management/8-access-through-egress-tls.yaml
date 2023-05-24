@@ -9,9 +9,25 @@ spec:
   - number: 80
     name: http-port
     protocol: HTTP
+  - number: 443
+    name: https-port
+    protocol: HTTPS
   resolution: DNS
 
 ---  
+
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: baidu
+spec:
+  host: www.baidu.com
+  trafficPolicy:
+    tls:
+      mode: SIMPLE # originate TLS connections to the upstream endpoint.
+
+---
+
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
@@ -57,3 +73,5 @@ spec:
     route:
     - destination:
         host: www.baidu.com
+        port:
+          number: 443
