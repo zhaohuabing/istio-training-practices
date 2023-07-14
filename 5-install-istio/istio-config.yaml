@@ -32,7 +32,7 @@ spec:
   components:
     pilot:
       hub: istio
-      tag: 1.15.6
+      tag: 1.16.5
       k8s:
         resources:
           requests:
